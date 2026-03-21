@@ -17,6 +17,8 @@
             --nav-bg: #1a202c;
             --social-default: #718096;
             --popup-title: #1e293b;
+            /* سایز فونت پایه */
+            --base-font: 16px;
         }
 
         body.dark-mode {
@@ -29,6 +31,9 @@
             --popup-title: #f1f5f9;
         }
 
+        /* اعمال سایز پایه */
+        html { font-size: var(--base-font); }
+
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Vazirmatn', sans-serif; margin: 0; overflow-x: hidden; padding-bottom: 120px; transition: 0.3s; }
 
@@ -38,6 +43,15 @@
             align-items: center; justify-content: center; cursor: pointer;
             z-index: 1100; box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
+        /* دکمه جدید تغییر سایز فونت */
+        .size-switch {
+            position: fixed; top: 30px; left: 65px; width: 38px; height: 38px;
+            background: var(--gray-light); border-radius: 10px; display: flex;
+            align-items: center; justify-content: center; cursor: pointer;
+            z-index: 1100; box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            font-weight: bold; font-size: 14px; color: var(--text); border: none;
+        }
+        
         .theme-icon { width: 18px; height: 18px; }
 
         header { width: 100%; padding: 50px 20px 40px; text-align: center; }
@@ -47,12 +61,12 @@
         .topics-container { width: 75%; max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
         
         .topic-row {
-            display: flex; align-items: center; background: var(--gray-light); padding: 10px 16px; border-radius: 22px;
+            display: flex; align-items: center; background: var(--gray-light); padding: 0.6rem 1rem; border-radius: 22px;
             cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .topic-row:hover { transform: translateY(-4px); background: var(--card-bg); border: 1px solid var(--gold); }
         
-        .icon-wrapper { width: 43px; height: 43px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: var(--card-bg); flex-shrink: 0; }
+        .icon-wrapper { width: 2.7rem; height: 2.7rem; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; background: var(--card-bg); flex-shrink: 0; }
         
         .topic-info { margin-right: 15px; flex-grow: 1; }
         .topic-info h3 { font-family: 'Rubik', sans-serif; font-weight: 700; font-size: 1.1rem; margin: 0; }
@@ -60,7 +74,7 @@
         .full-overlay {
             position: fixed; top: 50%; left: 50%; width: 90%; max-width: 500px; 
             background: var(--card-bg); border-radius: 40px; z-index: 2000;
-            padding: 45px 35px; text-align: center; border: 2px solid var(--gold-light);
+            padding: 2.8rem 2.2rem; text-align: center; border: 2px solid var(--gold-light);
             display: none; opacity: 0; transform: translate(-50%, -50%) scale(0.95); transition: 0.4s;
         }
         .full-overlay.open { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
@@ -82,7 +96,7 @@
         .social-btn.wa:hover { color: #25d366; }
         .social-btn.web:hover { color: var(--gold); }
 
-        .action-btn { background: var(--text); color: var(--bg); border: none; padding: 14px 30px; border-radius: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; font-family: 'Vazirmatn'; }
+        .action-btn { background: var(--text); color: var(--bg); border: none; padding: 14px 30px; border-radius: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; font-family: 'Vazirmatn'; font-size: 1rem; }
         
         .bottom-nav {
             position: fixed; bottom: 30px; width: 90%; max-width: 450px; 
@@ -92,7 +106,7 @@
         }
         .nav-item { color: #fff; text-decoration: none; font-size: 0.8rem; text-align: center; opacity: 0.6; display: flex; flex-direction: column; align-items: center; width: 22%; cursor: pointer; }
         .nav-item.active { opacity: 1; color: var(--gold); }
-        .nav-svg { width: 24px; height: 24px; margin-bottom: 6px; fill: none; stroke: currentColor; stroke-width: 2; }
+        .nav-svg { width: 1.5rem; height: 1.5rem; margin-bottom: 6px; fill: none; stroke: currentColor; stroke-width: 2; }
     </style>
 </head>
 <body id="body">
@@ -100,6 +114,8 @@
     <div class="theme-switch" onclick="toggleTheme()">
         <svg id="themeIcon" class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
     </div>
+
+    <div class="size-switch" onclick="changeSize()">A±</div>
 
     <header>
         <h1 class="logo">مَنار</h1>
@@ -158,6 +174,14 @@
     </nav>
 
     <script>
+        // منطق جدید تغییر سایز
+        let currentSize = 16;
+        function changeSize() {
+            if (currentSize >= 20) currentSize = 14;
+            else currentSize += 2;
+            document.documentElement.style.setProperty('--base-font', currentSize + 'px');
+        }
+
         const topicData = {
             sirah: {t: "سیره نبوی", i: "🌙", d: "سفری به زندگی گهربار پیامبر اکرم صلی الله علیه و آله وسلم از ولادت تا رحلت و آشنایی با اخلاق و مجاهدت‌های ایشان."},
             khalifa: {t: "خلفای راشدین", i: "🛡️", d: "آشنایی با زندگی و دوران حکومت ابوبکر صدیق، عمر فاروق، عثمان ذوالنورین و علی مرتضی رضی الله عنهم."},
