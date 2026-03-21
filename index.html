@@ -30,12 +30,14 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Vazirmatn', sans-serif; margin: 0; overflow-x: hidden; padding-bottom: 120px; transition: 0.3s; }
 
+        /* کوچک‌تر کردن آیکون تم‌سوییچ طبق درخواست شما */
         .theme-switch {
-            position: fixed; top: 30px; left: 20px; width: 45px; height: 45px;
-            background: var(--gray-light); border-radius: 12px; display: flex;
+            position: fixed; top: 30px; left: 20px; width: 38px; height: 38px;
+            background: var(--gray-light); border-radius: 10px; display: flex;
             align-items: center; justify-content: center; cursor: pointer;
-            z-index: 1100; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 1100; box-shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
+        .theme-icon { width: 18px; height: 18px; }
 
         header { width: 100%; padding: 50px 20px 40px; text-align: center; }
         .logo { font-family: 'Lalezar'; font-size: 3.5rem; margin: 0; color: var(--text); }
@@ -85,6 +87,8 @@
         .nav-item { color: #fff; text-decoration: none; font-size: 0.8rem; text-align: center; opacity: 0.6; display: flex; flex-direction: column; align-items: center; width: 22%; }
         .nav-item.active { opacity: 1; color: var(--gold); }
         .nav-svg { width: 24px; height: 24px; margin-bottom: 6px; fill: none; stroke: currentColor; stroke-width: 2; }
+        
+        .dark-title { font-family: 'Lalezar'; color: var(--text); font-size: 2.2rem; margin: 0; }
     </style>
 </head>
 <body id="body">
@@ -118,7 +122,7 @@
     </div>
 
     <div class="full-overlay" id="aboutOverlay">
-        <h2 style="font-family:Lalezar; color:var(--gold); font-size:2.5rem; margin:0;">مَنار</h2>
+        <h2 class="dark-title">درباره مَنار</h2>
         <p style="line-height: 2; text-align: justify; margin-top: 20px;">منار فراتر از یک بازی، یک سفر معرفتی به عمق تاریخ و کلام وحی است. هدف ما ترویج آگاهی در قالبی مدرن و جذاب برای نسل جوان است.</p>
         <div class="social-links">
             <a href="#" class="social-btn tg"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 5L2 12.5L9 15M21 5L18.5 20L9 15M21 5L9 15M9 15V20L13 17"/></svg></a>
@@ -130,7 +134,7 @@
     </div>
 
     <div class="full-overlay" id="dhikrOverlay">
-        <h2 style="font-family:Lalezar; color:var(--gold); font-size:2.2rem; margin:0;">✨ حدیث روز</h2>
+        <h2 class="dark-title">حدیث روز</h2>
         <div id="dhikrContent" style="margin:25px 0; font-size:1.2rem; line-height:2;"></div>
         <button class="action-btn" onclick="showRandomDhikr()">حدیث بعدی 🎲</button>
         <p onclick="closeAll()" style="cursor:pointer; margin-top:20px; color:#a0aec0;">بستن</p>
@@ -140,7 +144,14 @@
         <a href="#" class="nav-item active"><svg class="nav-svg"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>خانه</a>
         <a href="javascript:void(0)" class="nav-item" onclick="openOverlay('dhikrOverlay'); showRandomDhikr();"><svg class="nav-svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>ذکر روز</a>
         <a href="javascript:void(0)" class="nav-item"><svg class="nav-svg"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>جستجو</a>
-        <a href="javascript:void(0)" class="nav-item" onclick="openOverlay('aboutOverlay')"><svg class="nav-svg"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>درباره ما</a>
+        <a href="javascript:void(0)" class="nav-item" onclick="openOverlay('aboutOverlay')">
+            <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="8.5" cy="7" r="4"></circle>
+                <polyline points="17 11 19 13 23 9"></polyline>
+            </svg>
+            درباره ما
+        </a>
     </nav>
 
     <script>
