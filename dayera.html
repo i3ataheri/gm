@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منار | چیدمان دایره‌ای</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@900&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --accent: #ffcc00;
+            --glass: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body { 
+            background: radial-gradient(circle at center, #1e293b 0%, #000 100%);
+            color: var(--text);
+            font-family: 'Vazirmatn', sans-serif;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ظرف اصلی منو */
+        .radial-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* دکمه مرکزی (خورشید منو) */
+        .main-orb {
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            cursor: pointer;
+            box-shadow: 0 0 50px rgba(255, 204, 0, 0.4);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .main-orb h1 { font-family: 'Rubik'; font-size: 1.8rem; color: #000; margin: 0; }
+        .main-orb:active { transform: scale(0.9); }
+
+        /* آیتم‌های محیطی (سیاره‌ها) */
+        .orbit-item {
+            position: absolute;
+            width: 65px;
+            height: 65px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            transform: scale(0) translate(0, 0);
+        }
+
+        /* موقعیت‌دهی دایره‌ای با استفاده از متغیرهای CSS */
+        .radial-container.open .orbit-item { opacity: 1; }
+
+        /* فرمول چیدمان دایره‌ای: هر آیتم با یک زاویه مشخص */
+        .radial-container.open .item-1 { transform: scale(1) translate(0, -130px); } /* بالا */
+        .radial-container.open .item-2 { transform: scale(1) translate(110px, -65px); } /* بالا راست */
+        .radial-container.open .item-3 { transform: scale(1) translate(110px, 65px); } /* پایین راست */
+        .radial-container.open .item-4 { transform: scale(1) translate(0, 130px); } /* پایین */
+        .radial-container.open .item-5 { transform: scale(1) translate(-110px, 65px); } /* پایین چپ */
+        .radial-container.open .item-6 { transform: scale(1) translate(-110px, -65px); } /* بالا چپ */
+
+        .orbit-item span { font-size: 1.5rem; }
+        .orbit-label { 
+            position: absolute; bottom: -25px; font-size: 0.75rem; 
+            white-space: nowrap; font-weight: bold; color: var(--accent); 
+        }
+
+        /* افکت‌های پس‌زمینه */
+        .bg-rings {
+            position: absolute;
+            width: 260px; height: 260px;
+            border: 1px dashed rgba(255, 204, 0, 0.2);
+            border-radius: 50%;
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .info-panel {
+            position: absolute;
+            bottom: 40px;
+            text-align: center;
+            width: 100%;
+            padding: 0 20px;
+        }
+        .info-panel p { opacity: 0.6; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-rings"></div>
+
+    <div class="radial-container" id="menu">
+        <div class="main-orb" onclick="toggleMenu()">
+            <h1 id="centerText">مَنار</h1>
+        </div>
+
+        <div class="orbit-item item-1" onclick="select('سیره')">
+            <span>🌙</span>
+            <div class="orbit-label">سیره</div>
+        </div>
+        <div class="orbit-item item-2" onclick="select('خلفا')">
+            <span>🛡️</span>
+            <div class="orbit-label">خلفا</div>
+        </div>
+        <div class="orbit-item item-3" onclick="select('فقه')">
+            <span>📜</span>
+            <div class="orbit-label">فقه</div>
+        </div>
+        <div class="orbit-item item-4" onclick="select('تاریخ')">
+            <span>🌍</span>
+            <div class="orbit-label">تاریخ</div>
+        </div>
+        <div class="orbit-item item-5" onclick="select('اخلاق')">
+            <span>💎</span>
+            <div class="orbit-label">اخلاق</div>
+        </div>
+        <div class="orbit-item item-6" onclick="select('حدیث')">
+            <span>✍️</span>
+            <div class="orbit-label">حدیث</div>
+        </div>
+    </div>
+
+    <div class="info-panel">
+        <h2 id="statusTitle">به مَنار خوش آمدید</h2>
+        <p>برای شروع، روی مرکز کلیک کنید</p>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            const isOpening = !menu.classList.contains('open');
+            menu.classList.toggle('open');
+            
+            document.getElementById('centerText').innerText = isOpening ? '✕' : 'مَنار';
+        }
+
+        function select(name) {
+            document.getElementById('statusTitle').innerText = "ورود به بخش " + name;
+            // در اینجا می‌توانید کد انتقال به صفحه بعد را قرار دهید
+        }
+    </script>
+</body>
+</html>
