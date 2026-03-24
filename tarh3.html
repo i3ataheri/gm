@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اسلام کوییز | UI Studio</title>
+
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn-font@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            /* Dark Mode (Default) */
+            --bg: #0d0d12;
+            --card: #161b22;
+            --text: #ffffff;
+            --sub: #8b949e;
+            --accent: #ffcf4b;
+            --nav-bg: #161b22;
+            --border: rgba(255, 255, 255, 0.05);
+        }
+
+        body.light {
+            /* Light Mode (Improved) */
+            --bg: #f0f2f5;
+            --card: #ffffff;
+            --text: #1a1a1a;
+            --sub: #65676b;
+            --accent: #2e1065;
+            --nav-bg: #ffffff;
+            --border: rgba(0, 0, 0, 0.05);
+        }
+
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Vazirmatn', sans-serif;
+            direction: rtl;
+            text-align: center;
+            padding-bottom: 80px;
+        }
+
+        /* Mode Toggle */
+        .mode {
+            width: 42px; height: 42px;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 12px; background: var(--card);
+            cursor: pointer; color: var(--accent);
+            position: fixed; top: 20px; left: 20px; z-index: 1000;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .header { padding: 90px 20px 30px; }
+        .header h1 { font-size: 32px; font-weight: 800; margin: 0; }
+        .header-desc {
+            font-size: 14px; color: var(--sub);
+            margin: 10px auto 0; max-width: 350px; line-height: 1.6;
+        }
+
+        /* Grid Container */
+        .container {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Cards */
+        .card {
+            padding: 20px 15px;
+            border-radius: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+        .card .icon {
+            font-family: 'Material Symbols Outlined';
+            font-size: 32px; color: var(--accent); margin-bottom: 10px;
+            display: block;
+        }
+        .card .title { font-size: 16px; font-weight: 700; }
+        .card .desc { font-size: 11px; color: var(--sub); margin-top: 4px; }
+
+        /* Bottom Nav */
+        .nav {
+            position: fixed; bottom: 0; width: 100%; height: 70px;
+            background: var(--nav-bg); display: flex;
+            justify-content: space-around; align-items: center;
+            border-top: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+        }
+        .nav-item {
+            font-size: 11px; color: var(--sub); cursor: pointer;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .nav-item span {
+            font-family: 'Material Symbols Outlined';
+            font-size: 26px; color: var(--text); margin-bottom: 2px;
+        }
+        .nav-item:hover { color: var(--accent); }
+        .nav-item:hover span { color: var(--accent); }
+
+        /* Popups */
+        .popup-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.75); display: none;
+            justify-content: center; align-items: center; z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+        .popup {
+            background: var(--card); padding: 30px; border-radius: 25px;
+            width: 85%; max-width: 380px; text-align: center;
+            position: relative; animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .close-btn {
+            position: absolute; left: 20px; top: 20px;
+            cursor: pointer; font-size: 24px; opacity: 0.5;
+        }
+
+        /* Social Icons - NEW STYLE */
+        .social-icons {
+            display: flex; justify-content: center; gap: 20px; margin-top: 25px;
+        }
+        .social-icons a {
+            width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--bg); border-radius: 15px;
+            font-size: 22px; color: var(--sub); /* تک رنگ در حالت عادی */
+            text-decoration: none; border: 1px solid var(--border);
+        }
+        
+        /* تغییر رنگ به رنگ اصلی برند در هاور */
+        .social-icons a.facebook:hover { color: #1877f2; background: #edf4ff; border-color: #1877f2; }
+        .social-icons a.x-twitter:hover { color: #000; background: #fff; border-color: #000; }
+        .social-icons a.instagram:hover { color: #e1306c; background: #fff5f8; border-color: #e1306c; }
+
+        [data-theme="dark"] .social-icons a.x-twitter:hover { color: #fff; background: #000; }
+    </style>
+</head>
+<body id="body">
+
+<div class="mode" onclick="toggleMode()" id="modeBtn">
+    <span class="material-symbols-outlined">dark_mode</span>
+</div>
+
+<div class="header">
+    <h1>اسلام کوییز</h1>
+    <div class="header-desc">یک بازی سوال و جواب برای یادگیری مفاهیم اسلامی به صورت جذاب و سرگرم‌کننده</div>
+</div>
+
+<div class="container">
+    <div class="card"><span class="icon">menu_book</span><div class="title">قرآن</div><div class="desc">سوالات مربوط به قرآن</div></div>
+    <div class="card"><span class="icon">person</span><div class="title">پیامبران</div><div class="desc">زندگی انبیا</div></div>
+    <div class="card"><span class="icon">mosque</span><div class="title">نماز</div><div class="desc">احکام و رکعات</div></div>
+    <div class="card"><span class="icon">calendar_month</span><div class="title">روزه</div><div class="desc">احکام رمضان</div></div>
+    <div class="card"><span class="icon">public</span><div class="title">حج</div><div class="desc">مناسک حج</div></div>
+</div>
+
+<div class="popup-bg" id="popupAbout">
+    <div class="popup">
+        <span class="close-btn" onclick="closePopup('popupAbout')">×</span>
+        <h2 style="color:var(--accent)">درباره ما</h2>
+        <p style="line-height:1.8">این کوییز با هدف یادگیری مفاهیم اسلامی به شکل سرگرم‌کننده و جذاب توسط UI Studio طراحی شده است.</p>
+    </div>
+</div>
+
+<div class="popup-bg" id="popupSources">
+    <div class="popup">
+        <span class="close-btn" onclick="closePopup('popupSources')">×</span>
+        <h2 style="color:var(--accent)">منابع</h2>
+        <p style="line-height:1.8">استخراج شده از کتاب‌های معتبر اسلامی، قرآن کریم و منابع آموزشی تایید شده.</p>
+    </div>
+</div>
+
+<div class="popup-bg" id="popupSocial">
+    <div class="popup">
+        <span class="close-btn" onclick="closePopup('popupSocial')">×</span>
+        <h2 style="color:var(--accent)">همراه ما باشید</h2>
+        <div class="social-icons">
+            <a href="#" class="facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="x-twitter"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" class="instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+</div>
+
+<div class="nav">
+    <div class="nav-item" onclick="openPopup('popupAbout')"><span>info</span>درباره ما</div>
+    <div class="nav-item" onclick="openPopup('popupSources')"><span>library_books</span>منابع</div>
+    <div class="nav-item" onclick="openPopup('popupSocial')"><span>hub</span>شبکه‌ها</div>
+</div>
+
+<script>
+    let isLight = false;
+    function toggleMode() {
+        isLight = !isLight;
+        document.body.classList.toggle("light");
+        const btnIcon = document.querySelector("#modeBtn span");
+        btnIcon.textContent = isLight ? "light_mode" : "dark_mode";
+        // تنظیم تم برای آیکون X
+        document.body.setAttribute('data-theme', isLight ? 'light' : 'dark');
+    }
+
+    function openPopup(id) { 
+        const el = document.getElementById(id);
+        el.style.display = "flex";
+    }
+    function closePopup(id) { 
+        document.getElementById(id).style.display = "none"; 
+    }
+
+    // بستن پاپ آپ با کلیک روی پس‌زمینه
+    window.onclick = function(event) {
+        if (event.target.className === "popup-bg") {
+            event.target.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
