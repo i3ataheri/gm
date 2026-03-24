@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نمونه طرح‌های کوییز | UI Studio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn-font@v33.003/Vazirmatn-font-face.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* پالت لایت اختصاصی (بنفش تیره و سفید یخی) */
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --accent: #2e1065; 
+            --text-p: #1e1b4b;
+            --text-s: #64748b;
+            --border: rgba(46, 16, 101, 0.08);
+        }
+
+        [data-theme="dark"] {
+            /* پالت دارک اختصاصی (طلایی زعفرانی و بنفش عمیق) */
+            --bg: #0d0b14;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --accent: #ffcf4b;
+            --text-p: #ffffff;
+            --text-s: #9089a1;
+            --border: rgba(255, 207, 75, 0.15);
+        }
+
+        * { box-sizing: border-box; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--bg);
+            color: var(--text-p);
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .icon-btn {
+            width: 45px; height: 45px; border-radius: 14px;
+            border: 1px solid var(--border); background: var(--card-bg);
+            color: var(--accent); cursor: pointer; display: flex;
+            align-items: center; justify-content: center; font-size: 18px;
+        }
+
+        .icon-btn:hover { background: var(--accent); color: #fff; transform: scale(1.05); }
+
+        header { text-align: center; margin-bottom: 60px; }
+        header h1 { 
+            font-size: clamp(24px, 5vw, 36px); font-weight: 900; margin: 0;
+            background: linear-gradient(to bottom, var(--text-p), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        header p { margin-top: 10px; color: var(--text-s); font-size: 14px; opacity: 0.8; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 45px 15px; /* کمی پدینگ بیشتر برای تمرکز روی عدد */
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        [data-theme="dark"] .card:hover { box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+
+        /* استایل اعداد گرافیکی */
+        .card .num {
+            font-family: 'Arial Black', sans-serif;
+            font-size: 60px;
+            font-weight: 900;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--accent);
+        }
+
+        .card:hover .num {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            font-size: 10px;
+            font-weight: 700;
+            opacity: 0.3;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="container">
+    <div class="top-nav">
+        <button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fas fa-moon"></i></button>
+        <div style="font-weight: 900; color: var(--accent); font-size: 18px;">UI STUDIO</div>
+    </div>
+
+    <header>
+        <h1>گالری طرح‌های کوییز</h1>
+        <p>نمونه‌های اولیه طراحی شده برای بازی‌های تعاملی</p>
+    </header>
+
+    <div class="grid">
+        <a href="tarh1.html" class="card"><span class="num">1</span></a>
+        <a href="tarh2.html" class="card"><span class="num">2</span></a>
+        <a href="tarh3.html" class="card"><span class="num">3</span></a>
+        <a href="tarh4.html" class="card"><span class="num">4</span></a>
+        <a href="tarh5.html" class="card"><span class="num">5</span></a>
+        <a href="tarh6.html" class="card"><span class="num">6</span></a>
+        <a href="tarh7.html" class="card"><span class="num">7</span></a>
+        <a href="tarh8.html" class="card"><span class="num">8</span></a>
+        <a href="tarh9.html" class="card"><span class="num">9</span></a>
+        <a href="tarh10.html" class="card"><span class="num">10</span></a>
+    </div>
+
+    <footer>DESIGNED BY ABDULLAH AL-BALOOSHI | 2026</footer>
+</div>
+
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('theme-icon');
+        const isDark = body.getAttribute('data-theme') === 'dark';
+        body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
+    }
+</script>
+
+</body>
+</html>
