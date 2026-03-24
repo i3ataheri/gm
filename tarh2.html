@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Quiz | UI Studio</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn-font@v33.003/Vazirmatn-font-face.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            /* دارک: زعفرانی و بنفش تیره */
+            --bg-body: #0d0b14; 
+            --text-main: #ffffff;
+            --text-sub: #9089a1;
+            --accent: #ffcf4b; 
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 207, 75, 0.2);
+            --modal-bg: #14111d;
+        }
+
+        [data-theme="light"] {
+            /* لایت: سفید یخی و بنفش عمیق */
+            --bg-body: #f8fafc; 
+            --text-main: #1e1b4b;
+            --text-sub: #475569;
+            --accent: #2e1065; 
+            --card-bg: #ffffff;
+            --border: rgba(46, 16, 101, 0.12);
+            --modal-bg: #ffffff;
+        }
+
+        * { box-sizing: border-box; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: var(--bg-body);
+            margin: 0; color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 25px; }
+
+        .top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        .nav-right { display: flex; gap: 12px; }
+
+        .icon-btn {
+            width: 48px; height: 48px; border-radius: 16px;
+            border: 1px solid var(--border); background: var(--card-bg);
+            color: var(--accent); cursor: pointer; display: flex;
+            align-items: center; justify-content: center; font-size: 20px;
+        }
+
+        .icon-btn:hover { background: var(--accent); color: #fff; transform: translateY(-3px); }
+        [data-theme="dark"] .icon-btn:hover { color: #000; }
+
+        header { text-align: center; margin-bottom: 60px; }
+        header h1 { 
+            font-size: clamp(28px, 6vw, 42px); font-weight: 900; margin: 0;
+            background: linear-gradient(to bottom, var(--text-main), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .topics-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px;
+        }
+
+        .topic-card {
+            background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px;
+            padding: 40px 20px; text-align: center; cursor: pointer;
+            text-decoration: none; display: flex; flex-direction: column; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .topic-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .topic-card i { font-size: 40px; color: var(--accent); margin-bottom: 18px; }
+        .topic-card span { font-weight: 800; font-size: 17px; }
+
+        /* Modal & Socials */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7); display: none; justify-content: center;
+            align-items: center; z-index: 1000; backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: var(--modal-bg); width: 90%; max-width: 400px;
+            padding: 45px 30px; border-radius: 35px; text-align: center;
+            border: 1px solid var(--border); animation: pop 0.4s ease;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .social-links { display: flex; justify-content: center; gap: 15px; margin: 30px 0; }
+        
+        .social-links a {
+            width: 55px; height: 55px; background: var(--card-bg);
+            border-radius: 18px; display: flex; align-items: center;
+            justify-content: center; font-size: 24px; border: 1px solid var(--border);
+            text-decoration: none; color: var(--accent); 
+        }
+
+        .social-links a:hover { transform: translateY(-8px) scale(1.1); border-color: transparent; }
+
+        /* رنگ‌های اختصاصی در هاور */
+        .social-links a.insta:hover { color: #E1306C; background: #fff1f6; }
+        .social-links a.whatsapp:hover { color: #25D366; background: #f0fff5; }
+        .social-links a.x-twitter:hover { color: #000000; background: #ffffff; }
+        .social-links a.youtube:hover { color: #FF0000; background: #fff0f0; }
+
+        /* اصلاح برای حالت دارک */
+        [data-theme="dark"] .social-links a.x-twitter:hover { color: #ffffff; background: #1a1a1a; }
+
+        .modal-btn {
+            background: var(--accent); border: none; padding: 12px 30px;
+            border-radius: 14px; cursor: pointer; font-family: 'Vazirmatn';
+            font-weight: 800; color: #fff;
+        }
+        [data-theme="dark"] .modal-btn { color: #000; }
+
+        footer { text-align: center; padding: 60px 0; font-size: 11px; opacity: 0.4; font-weight: 700; }
+    </style>
+</head>
+<body data-theme="dark">
+
+<div class="container">
+    <div class="top-nav">
+        <div class="nav-right">
+            <button class="icon-btn" onclick="toggleTheme()"><i id="theme-icon" class="fas fa-moon"></i></button>
+            <button class="icon-btn" onclick="openModal()"><i class="fas fa-info-circle"></i></button>
+        </div>
+        <div style="font-weight: 900; color: var(--accent); letter-spacing: 1px;">UI STUDIO</div>
+    </div>
+
+    <header>
+        <h1>کوییز آنلاین اسـلامی</h1>
+        <p>«دانش خود را در فضایی هوشمند و آرام به چالش بکشید.»</p>
+    </header>
+
+    <div class="topics-grid">
+        <div class="topic-card"><i class="fas fa-star-and-crescent"></i><span>عقیده و توحید</span><small>سوالات پایه‌ای ایمان</small></div>
+        <div class="topic-card"><i class="fas fa-book-quran"></i><span>قرآن کریم</span><small>حفظ و دانستنی‌ها</small></div>
+        <div class="topic-card"><i class="fas fa-mosque"></i><span>سیره نبوی</span><small>زندگی پیامبر (ص)</small></div>
+        <div class="topic-card"><i class="fas fa-gavel"></i><span>فقه و احکام</span><small>مسائل شرعی و طهارت</small></div>
+        <div class="topic-card"><i class="fas fa-heart"></i><span>اخلاق و آداب</span><small>مباحث تزکیه نفس</small></div>
+        <div class="topic-card"><i class="fas fa-shield-halved"></i><span>فتوحات اسلام</span><small>تمدن و گسترش اسلام</small></div>
+        <div class="topic-card"><i class="fas fa-person-dress"></i><span>مادران مؤمنان</span><small>همسران پیامبر (ص)</small></div>
+        <div class="topic-card"><i class="fas fa-flask-vial"></i><span>دانشمندان مسلمان</span><small>نوابغ طب و ریاضیات</small></div>
+        <div class="topic-card"><i class="fas fa-city"></i><span>پایتخت‌های خلافت</span><small>سفر به شهرهای کهن</small></div>
+        <div class="topic-card"><i class="fas fa-1"></i><span>اولین‌ها</span><small>پیشگامان در اسلام</small></div>
+        <div class="topic-card"><i class="fas fa-hourglass-end"></i><span>آخرین‌ها</span><small>وقایع پایانی وحی</small></div>
+    </div>
+
+    <footer>DESIGNED BY ABDULLAH AL-BALOOSHI | 2026</footer>
+</div>
+
+<div class="modal-overlay" id="aboutModal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <h2 style="color: var(--accent); margin-top: 0; font-weight: 900;">ارتباط با ما</h2>
+        <p style="font-size: 14px; color: var(--text-sub); line-height: 1.8;">ما در <b>UI Studio</b> مشتاق شنیدن نظرات شما هستیم.</p>
+        
+        <div class="social-links">
+            <a href="#" class="insta"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="x-twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="youtube"><i class="fab fa-youtube"></i></a>
+        </div>
+        
+        <button class="modal-btn" onclick="closeModal()">بستن</button>
+    </div>
+</div>
+
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        const icon = document.getElementById('theme-icon');
+        const isDark = body.getAttribute('data-theme') !== 'light';
+        body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+    }
+    function openModal() { document.getElementById('aboutModal').classList.add('active'); }
+    function closeModal() { document.getElementById('aboutModal').classList.remove('active'); }
+</script>
+
+</body>
+</html>
