@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Islamic Quiz | Cards Edition</title>
+    <title>اسلام کوییز | نسخه اهل سنت</title>
 
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn-font@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;800&family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -15,35 +15,28 @@
             --bg: #09090f;
             --card: #161b22;
             --text: #ffffff;
-            --sub: #8b949e;
-            --accent: #ffcf4b;
-            --border: rgba(255, 255, 255, 0.05);
-            --social-ic-tw: #a1a1a1;
-            --social-bg-tw-hover: #ffffff;
-            --social-ic-tw-hover: #000000;
+            --sub: #94a3b8;
+            --accent: #ffcf4b; /* طلایی زعفرانی */
+            --border: rgba(255, 255, 255, 0.08);
+            --font-title: 'Rubik', sans-serif;
+            --font-body: 'Vazirmatn', sans-serif;
         }
 
         body.light {
-            --bg: #f4f7fa;
+            --bg: #f8fafc;
             --card: #ffffff;
-            --text: #1e293b;
+            --text: #0f172a;
             --sub: #64748b;
-            --accent: #4338ca;
-            --border: rgba(0, 0, 0, 0.05);
-            --social-ic-tw: #64748b;
-            --social-bg-tw-hover: #1a1a1a;
-            --social-ic-tw-hover: #ffffff;
+            --accent: #4f46e5;
+            --border: rgba(0, 0, 0, 0.08);
         }
 
         * { box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 
-        /* جلوگیری از اسکرول اضافی */
         html, body {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            overflow: hidden; /* حذف کامل اسکرول بدنه */
-            background: var(--bg); color: var(--text);
-            font-family: 'Vazirmatn', sans-serif;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background: var(--bg); color: var(--text);
+            font-family: var(--font-body);
         }
 
         body { display: flex; flex-direction: column; }
@@ -54,124 +47,149 @@
         }
 
         .action-btn {
-            width: 45px; height: 45px; border-radius: 12px;
+            width: 42px; height: 42px; border-radius: 12px;
             background: var(--card); border: 1px solid var(--border);
             color: var(--accent); cursor: pointer; display: flex;
             align-items: center; justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            text-decoration: none;
+            text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .header { padding: 40px 20px 10px; text-align: center; flex-shrink: 0; }
-        .header h1 { font-size: 24px; font-weight: 800; margin: 0; }
-        .header p { font-size: 12px; color: var(--sub); margin-top: 5px; }
+        .header { padding: 45px 20px 10px; text-align: center; flex-shrink: 0; }
+        .header h1 { font-family: var(--font-title); font-size: 28px; margin: 0; }
+        .header p { font-size: 13px; color: var(--sub); margin-top: 6px; }
 
-        /* بخش میانی برای پر کردن فضا */
         .swiper-container {
-            flex: 1; /* پر کردن فضای باقی‌مانده */
-            display: flex; align-items: center; justify-content: center;
-            width: 100%; position: relative;
-            overflow: hidden; /* جلوگیری از اسکرول افقی هنگام چرخش کارت */
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            width: 100%; position: relative; overflow: hidden;
         }
 
-        .swiper { width: 280px; height: 380px; }
-
-        @media (max-height: 650px) {
-            .swiper { width: 240px; height: 320px; }
-            .header { padding-top: 30px; }
-        }
+        .swiper { width: 290px; height: 400px; }
 
         .swiper-slide {
-            background: var(--card); border-radius: 30px;
+            background: var(--card); border-radius: 35px;
             border: 1px solid var(--border);
             display: flex; flex-direction: column; align-items: center;
-            justify-content: center; padding: 30px 20px; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            justify-content: center; padding: 30px; text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
         .slide-icon {
-            font-family: 'Material Symbols Outlined'; font-size: 70px;
-            color: var(--accent); margin-bottom: 20px;
+            font-family: 'Material Symbols Outlined'; font-size: 75px;
+            color: var(--accent); margin-bottom: 25px;
         }
 
-        .slide-title { font-size: 20px; font-weight: 800; margin-bottom: 10px; }
-        .slide-desc { font-size: 13px; color: var(--sub); line-height: 1.6; }
+        .slide-title { font-family: var(--font-title); font-size: 22px; margin-bottom: 12px; }
+        .slide-desc { font-size: 14px; color: var(--sub); line-height: 1.7; font-weight: 300; }
 
-        /* پاپ‌آپ‌ها */
+        /* Popups */
         .popup-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); display: none; z-index: 2000;
-            justify-content: center; align-items: center; backdrop-filter: blur(10px);
+            justify-content: center; align-items: center; backdrop-filter: blur(8px);
         }
         .popup-content {
-            background: var(--card); width: 85%; max-width: 380px;
-            padding: 30px; border-radius: 25px; text-align: center;
+            background: var(--card); width: 90%; max-width: 400px;
+            padding: 35px; border-radius: 30px; text-align: center;
             position: relative; border: 1px solid var(--border);
         }
+        .popup-content h2 { font-family: var(--font-title); color: var(--accent); margin-top: 0; }
 
-        .social-box { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        /* Social Icons Hover logic */
+        .social-box { display: flex; justify-content: center; gap: 15px; margin-top: 25px; }
         .social-box a {
-            width: 50px; height: 50px; border-radius: 12px;
+            width: 55px; height: 55px; border-radius: 15px;
             background: var(--bg); display: flex; align-items: center;
-            justify-content: center; font-size: 20px; color: var(--sub);
+            justify-content: center; font-size: 24px; color: var(--sub);
             text-decoration: none; border: 1px solid var(--border);
         }
-        .social-box a.tw { color: var(--social-ic-tw); }
-        .social-box a.tw:hover { background: var(--social-bg-tw-hover); color: var(--social-ic-tw-hover); }
 
-        /* منوی پایین ثابت */
+        /* لایت مود و دارک مود رنگ‌ها با هاور */
+        .social-box a.fb:hover { color: #1877f2; border-color: #1877f2; background: #fff; }
+        .social-box a.tw:hover { color: #000000; border-color: #000000; background: #ffffff; }
+        .social-box a.ig:hover { color: #e1306c; border-color: #e1306c; background: #fff; }
+
+        /* Footer Navigation */
         .footer-nav {
-            height: 70px; background: var(--card); border-top: 1px solid var(--border);
+            height: 75px; background: var(--card); border-top: 1px solid var(--border);
             display: flex; justify-content: space-around; align-items: center;
-            padding-bottom: env(safe-area-inset-bottom);
-            flex-shrink: 0; /* جلوگیری از فشرده شدن منو */
+            padding-bottom: env(safe-area-inset-bottom); flex-shrink: 0;
         }
         .nav-link {
             display: flex; flex-direction: column; align-items: center;
-            font-size: 10px; color: var(--sub); cursor: pointer; text-decoration: none;
+            font-size: 11px; color: var(--sub); cursor: pointer; text-decoration: none;
         }
-        .nav-link span { font-family: 'Material Symbols Outlined'; font-size: 26px; color: var(--text); margin-bottom: 2px; }
+        .nav-link span { font-family: 'Material Symbols Outlined'; font-size: 28px; color: var(--text); margin-bottom: 3px; }
+        .nav-link:hover { color: var(--accent); }
+
+        .close-btn { margin-top: 25px; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 25px; border-radius: 10px; cursor: pointer; font-family: var(--font-body); }
     </style>
 </head>
 <body id="body">
 
 <div class="top-actions">
-    <a href="index.html" class="action-btn"><span class="material-symbols-outlined">home</span></a>
-    <button class="action-btn" onclick="toggleTheme()"><span id="theme-icon" class="material-symbols-outlined">dark_mode</span></button>
+    <a href="index.html" class="action-btn" title="خانه"><span class="material-symbols-outlined">home</span></a>
+    <button class="action-btn" onclick="toggleTheme()" title="تغییر حالت"><span id="theme-icon" class="material-symbols-outlined">dark_mode</span></button>
 </div>
 
 <div class="header">
     <h1>اسلام کوییز</h1>
-    <p>کارت‌ها را ورق بزنید</p>
+    <p>معارف اسلامی بر اساس کتاب و سنت</p>
 </div>
 
 <div class="swiper-container">
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><span class="slide-icon">menu_book</span><div class="slide-title">قرآن کریم</div><p class="slide-desc">مفاهیم و شگفتی‌های آیات الهی</p></div>
-            <div class="swiper-slide"><span class="slide-icon">mosque</span><div class="slide-title">احکام عملی</div><p class="slide-desc">یادگیری واجبات و مستحبات دینی</p></div>
-            <div class="swiper-slide"><span class="slide-icon">history_edu</span><div class="title">تاریخ اسلام</div><p class="slide-desc">سیره پیامبر و ائمه اطهار (ع)</p></div>
-            <div class="swiper-slide"><span class="slide-icon">auto_awesome</span><div class="slide-title">اخلاق</div><p class="slide-desc">رفتارهای پسندیده در زندگی</p></div>
+            <div class="swiper-slide">
+                <span class="slide-icon">menu_book</span>
+                <div class="slide-title">قرآن کریم</div>
+                <p class="slide-desc">پرسش‌هایی در مورد کلام‌الله مجید، شأن نزول و تجوید آیات</p>
+            </div>
+            <div class="swiper-slide">
+                <span class="slide-icon">history_edu</span>
+                <div class="slide-title">سیره نبوی</div>
+                <p class="slide-desc">آشنایی با زندگی پیامبر ﷺ و جانفشانی‌های اصحاب کبار رضی‌الله‌عنهم</p>
+            </div>
+            <div class="swiper-slide">
+                <span class="slide-icon">mosque</span>
+                <div class="slide-title">فقه و احکام</div>
+                <p class="slide-desc">احکام صحیح طهارت، نماز، زکات و روزه طبق سنت نبوی</p>
+            </div>
+            <div class="swiper-slide">
+                <span class="slide-icon">auto_awesome</span>
+                <div class="slide-title">عقیده و اخلاق</div>
+                <p class="slide-desc">اصول ایمان و مبانی توحید بر منهج سلف صالح</p>
+            </div>
         </div>
     </div>
 </div>
 
 <div class="popup-overlay" id="popupSocial">
     <div class="popup-content">
-        <h2 style="color:var(--accent)">شبکه‌ها</h2>
+        <h2>ارتباط با ما</h2>
+        <p style="font-size: 14px; color: var(--sub);">ما را در شبکه‌های اجتماعی دنبال کنید</p>
         <div class="social-box">
             <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="tw"><i class="fab fa-x-twitter"></i></a>
             <a href="#" class="ig"><i class="fab fa-instagram"></i></a>
         </div>
-        <button style="margin-top:20px; background:none; border:none; color:var(--sub); cursor:pointer" onclick="togglePopup('popupSocial', false)">بستن</button>
+        <button class="close-btn" onclick="togglePopup('popupSocial', false)">بستن</button>
+    </div>
+</div>
+
+<div class="popup-overlay" id="popupAbout">
+    <div class="popup-content">
+        <h2>درباره ما</h2>
+        <p style="font-size: 14px; line-height: 1.8; text-align: justify; color: var(--sub);">
+            این برنامه با هدف نشر معارف صحیح اسلامی بر اساس کتاب الله و سنت پیامبر ﷺ طراحی شده است. تمامی محتوا از منابع معتبر اهل سنت و جماعت استخراج شده تا بستری سالم برای یادگیری خانواده‌ها فراهم گردد.
+        </p>
+        <button class="close-btn" onclick="togglePopup('popupAbout', false)">متوجه شدم</button>
     </div>
 </div>
 
 <div class="footer-nav">
-    <div class="nav-link" onclick="togglePopup('popupSocial', true)"><span>share</span>اشتراک</div>
-    <div class="nav-link"><span>leaderboard</span>رتبه</div>
-    <div class="nav-link" onclick="location.reload()"><span>refresh</span>دوباره</div>
+    <div class="nav-link" onclick="togglePopup('popupAbout', true)"><span>info</span>درباره ما</div>
+    <div class="nav-link"><span>emoji_events</span>برترین‌ها</div>
+    <div class="nav-link" onclick="togglePopup('popupSocial', true)"><span>share</span>حمایت از ما</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -190,6 +208,12 @@
     }
 
     function togglePopup(id, show) { document.getElementById(id).style.display = show ? "flex" : "none"; }
+
+    window.onclick = function(e) {
+        if (e.target.className === "popup-overlay") {
+            document.querySelectorAll('.popup-overlay').forEach(p => p.style.display = "none");
+        }
+    }
 </script>
 
 </body>
