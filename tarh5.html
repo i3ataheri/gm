@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>اسلام کوییز | UI Studio Edition</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;800&family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card-text: #ffffff;
+            --card-sub: #cbd5e1;
+            --accent: #ffcf4b; 
+            --btn-text: #000000;
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --font-title: 'Rubik', sans-serif;
+            --font-body: 'Vazirmatn', sans-serif;
+        }
+
+        body.light {
+            --bg: #f1f5f9;
+            --card-text: #1e293b;
+            --card-sub: #475569;
+            --accent: #4f46e5; 
+            --btn-text: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.1);
+        }
+
+        /* انیمیشن کلی برای تغییرات نرم */
+        * { box-sizing: border-box; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        html, body {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background: var(--bg); color: var(--card-text);
+            font-family: var(--font-body);
+        }
+
+        body { display: flex; flex-direction: column; }
+
+        .top-actions {
+            position: absolute; top: 20px; left: 20px; z-index: 1000;
+            display: flex; gap: 12px;
+        }
+
+        .action-btn {
+            width: 48px; height: 48px; border-radius: 16px;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            color: var(--accent); cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
+            text-decoration: none; backdrop-filter: blur(12px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .header { padding: 60px 20px 0; text-align: center; flex-shrink: 0; }
+        .header h1 { font-family: var(--font-title); font-size: 32px; margin: 0; letter-spacing: -1px; }
+        .header p { font-size: 14px; color: var(--card-sub); margin-top: 8px; opacity: 0.9; }
+
+        .swiper-container {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            width: 100%; overflow: hidden;
+        }
+
+        .swiper { width: 100%; padding: 60px 0; }
+
+        .swiper-slide {
+            width: 300px; height: 460px;
+            border-radius: 45px; position: relative; overflow: hidden;
+            border: 1px solid var(--glass-border);
+            background: #1e293b;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* استایل داخلی کارت‌ها */
+        .slide-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            z-index: 1; transform: scale(1.1);
+        }
+        
+        .slide-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            z-index: 2;
+        }
+
+        .slide-content {
+            position: relative; z-index: 3;
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; padding: 40px 30px; text-align: center;
+        }
+
+        .slide-icon {
+            font-family: 'Material Symbols Outlined'; font-size: 90px;
+            color: var(--accent); margin-bottom: 25px;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+        }
+
+        .slide-title { font-family: var(--font-title); font-size: 28px; margin-bottom: 12px; }
+        .slide-desc { font-size: 15px; color: var(--card-sub); line-height: 1.8; margin-bottom: 35px; }
+
+        .play-btn {
+            background: var(--accent); color: var(--btn-text);
+            padding: 12px 30px; border-radius: 18px;
+            font-family: var(--font-title); font-size: 15px;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            font-weight: 800; text-decoration: none;
+        }
+
+        /* Popups */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); display: none; z-index: 2000;
+            justify-content: center; align-items: center; backdrop-filter: blur(20px);
+        }
+        .popup-content {
+            background: var(--glass-bg); width: 88%; max-width: 400px;
+            padding: 40px; border-radius: 40px; text-align: center;
+            border: 1px solid var(--glass-border);
+            animation: popupScale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popupScale { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        .social-box { display: flex; justify-content: center; gap: 18px; margin: 30px 0; }
+        .social-box a {
+            width: 55px; height: 55px; border-radius: 18px;
+            background: var(--bg); display: flex; align-items: center;
+            justify-content: center; font-size: 24px; color: var(--card-sub);
+            text-decoration: none; border: 1px solid var(--glass-border);
+        }
+        .social-box a:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-5px); }
+
+        .close-btn { 
+            background: var(--accent); border: none; 
+            color: var(--btn-text); padding: 14px 40px; 
+            border-radius: 18px; cursor: pointer; 
+            font-family: var(--font-title); font-weight: 800; 
+        }
+
+        .footer-nav {
+            height: 85px; background: var(--glass-bg); border-top: 1px solid var(--glass-border);
+            display: flex; justify-content: space-around; align-items: center;
+            padding-bottom: env(safe-area-inset-bottom); backdrop-filter: blur(25px);
+        }
+        .nav-link {
+            display: flex; flex-direction: column; align-items: center;
+            font-size: 12px; color: var(--card-sub); cursor: pointer; text-decoration: none;
+        }
+        .nav-link span { font-family: 'Material Symbols Outlined'; font-size: 32px; color: var(--card-text); margin-bottom: 4px; }
+    </style>
+</head>
+<body id="body">
+
+<div class="top-actions">
+    <a href="index.html" class="action-btn"><span class="material-symbols-outlined">home</span></a>
+    <button class="action-btn" onclick="toggleTheme()"><span id="theme-icon" class="material-symbols-outlined">dark_mode</span></button>
+</div>
+
+<div class="header">
+    <h1>اسلام کوییز</h1>
+    <p>بر منهج کتاب و سنت نبوی ﷺ</p>
+</div>
+
+<div class="swiper-container">
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            
+            <div class="swiper-slide">
+                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/holy-quran-with-rosary-beads-dark_23-2148815141.jpg?w=600');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="slide-icon">menu_book</span>
+                    <div class="slide-title">قرآن کریم</div>
+                    <p class="slide-desc">مفاهیم، تجوید و شگفتی‌های آیات الهی</p>
+                    <a href="game_quran.html" class="play-btn">شروع چالش <span class="material-symbols-outlined">play_circle</span></a>
+                </div>
+            </div>
+            
+            <div class="swiper-slide">
+                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/beautiful-view-mosque-with-sunlight_23-2148815132.jpg?w=600');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="slide-icon">history_edu</span>
+                    <div class="slide-title">سیره نبوی</div>
+                    <p class="slide-desc">زندگی پیامبر ﷺ و جانفشانی‌های اصحاب</p>
+                    <a href="game_seerah.html" class="play-btn">شروع چالش <span class="material-symbols-outlined">play_circle</span></a>
+                </div>
+            </div>
+            
+            <div class="swiper-slide">
+                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/islamic-concept-with-rosary-beads_23-2148815147.jpg?w=600');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="slide-icon">mosque</span>
+                    <div class="slide-title">فقه و احکام</div>
+                    <p class="slide-desc">آموزش صحیح نماز، زکات و طهارت</p>
+                    <a href="game_fiqh.html" class="play-btn">شروع چالش <span class="material-symbols-outlined">play_circle</span></a>
+                </div>
+            </div>
+            
+            <div class="swiper-slide">
+                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/beautiful-landscape-with-mountains-sunset_23-2148272531.jpg?w=600');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="slide-icon">auto_awesome</span>
+                    <div class="slide-title">عقیده و اخلاق</div>
+                    <p class="slide-desc">منهج سلف صالح و اصول ایمان</p>
+                    <a href="game_aqidah.html" class="play-btn">شروع چالش <span class="material-symbols-outlined">play_circle</span></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="popup-overlay" id="popupAbout">
+    <div class="popup-content">
+        <h2 style="font-family: var(--font-title); color: var(--accent);">درباره ما</h2>
+        <p style="font-size: 15px; line-height: 1.8; text-align: justify; color: var(--card-sub);">
+            این برنامه با هدف نشر معارف صحیح اسلامی بر اساس کتاب الله و سنت پیامبر ﷺ طراحی شده است.
+        </p>
+        <div class="social-box">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-x-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+        <button class="close-btn" onclick="togglePopup('popupAbout', false)">بستن</button>
+    </div>
+</div>
+
+<div class="footer-nav">
+    <div class="nav-link" onclick="togglePopup('popupAbout', true)"><span>info</span>درباره ما</div>
+    <div class="nav-link"><span>emoji_events</span>برترین‌ها</div>
+    <div class="nav-link" onclick="togglePopup('popupAbout', true)"><span>share</span>اشتراک</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper(".mySwiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        loop: true,
+        speed: 900, /* سرعت جابه‌جایی - نرم‌تر */
+        coverflowEffect: {
+            rotate: 20,     /* زاویه کمتر برای پایداری بصری */
+            stretch: -40,   /* فاصله مناسب بین کارت‌ها */
+            depth: 120,     /* عمق سه‌بعدی متناسب */
+            modifier: 1.5,
+            slideShadows: false,
+        },
+        /* اضافه کردن انیمیشن نرم هنگام شروع کشیدن */
+        touchReleaseOnEdges: true,
+        resistanceRatio: 0.85,
+    });
+
+    function toggleTheme() {
+        document.body.classList.toggle("light");
+        const icon = document.getElementById("theme-icon");
+        icon.textContent = document.body.classList.contains("light") ? "light_mode" : "dark_mode";
+    }
+
+    function togglePopup(id, show) { document.getElementById(id).style.display = show ? "flex" : "none"; }
+</script>
+
+</body>
+</html>
