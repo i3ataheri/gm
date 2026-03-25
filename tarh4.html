@@ -12,30 +12,30 @@
 
     <style>
         :root {
-            --bg: #09090f;
-            --card: #161b22;
-            --text: #ffffff;
-            --sub: #94a3b8;
-            --accent: #ffcf4b; /* طلایی زعفرانی */
-            --border: rgba(255, 255, 255, 0.08);
+            --bg: #0d1117;
+            --card-text: #ffffff;
+            --card-sub: #cbd5e1;
+            --accent: #ffcf4b;
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.12);
             --font-title: 'Rubik', sans-serif;
             --font-body: 'Vazirmatn', sans-serif;
         }
 
         body.light {
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #0f172a;
-            --sub: #64748b;
+            --bg: #f1f5f9;
+            --card-text: #1e293b;
+            --card-sub: #475569;
             --accent: #4f46e5;
-            --border: rgba(0, 0, 0, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.1);
         }
 
-        * { box-sizing: border-box; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 
         html, body {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            overflow: hidden; background: var(--bg); color: var(--text);
+            overflow: hidden; background: var(--bg); color: var(--card-text);
             font-family: var(--font-body);
         }
 
@@ -47,149 +47,197 @@
         }
 
         .action-btn {
-            width: 42px; height: 42px; border-radius: 12px;
-            background: var(--card); border: 1px solid var(--border);
+            width: 45px; height: 45px; border-radius: 14px;
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
             color: var(--accent); cursor: pointer; display: flex;
             align-items: center; justify-content: center;
-            text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-decoration: none; backdrop-filter: blur(10px);
         }
 
-        .header { padding: 45px 20px 10px; text-align: center; flex-shrink: 0; }
+        .header { padding: 50px 20px 0; text-align: center; flex-shrink: 0; }
         .header h1 { font-family: var(--font-title); font-size: 28px; margin: 0; }
-        .header p { font-size: 13px; color: var(--sub); margin-top: 6px; }
+        .header p { font-size: 13px; color: var(--card-sub); margin-top: 6px; }
 
         .swiper-container {
             flex: 1; display: flex; align-items: center; justify-content: center;
             width: 100%; position: relative; overflow: hidden;
         }
 
-        .swiper { width: 290px; height: 400px; }
+        .swiper { width: 320px; height: 460px; }
 
         .swiper-slide {
-            background: var(--card); border-radius: 35px;
-            border: 1px solid var(--border);
+            border-radius: 40px;
+            position: relative; overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-decoration: none; color: inherit;
+            border: 1px solid var(--glass-border);
+            background: #1e293b;
+        }
+
+        .slide-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            z-index: 1; transform: scale(1.1);
+        }
+        
+        .swiper-slide:hover .slide-bg { transform: scale(1.2); }
+
+        .slide-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px) saturate(160%);
+            -webkit-backdrop-filter: blur(12px) saturate(160%);
+            z-index: 2;
+        }
+
+        .slide-content {
+            position: relative; z-index: 3;
+            width: 100%; height: 100%;
             display: flex; flex-direction: column; align-items: center;
-            justify-content: center; padding: 30px; text-align: center;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            justify-content: center; padding: 40px 25px; text-align: center;
         }
 
         .slide-icon {
-            font-family: 'Material Symbols Outlined'; font-size: 75px;
-            color: var(--accent); margin-bottom: 25px;
+            font-family: 'Material Symbols Outlined'; font-size: 85px;
+            color: var(--accent); margin-bottom: 20px;
         }
 
-        .slide-title { font-family: var(--font-title); font-size: 22px; margin-bottom: 12px; }
-        .slide-desc { font-size: 14px; color: var(--sub); line-height: 1.7; font-weight: 300; }
+        .slide-title { font-family: var(--font-title); font-size: 26px; margin-bottom: 12px; }
+        .slide-desc { font-size: 15px; color: var(--card-sub); line-height: 1.7; margin-bottom: 30px; }
+
+        .play-btn {
+            background: var(--accent); color: #000;
+            padding: 10px 25px; border-radius: 15px;
+            font-family: var(--font-title); font-size: 14px;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
         /* Popups */
         .popup-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); display: none; z-index: 2000;
-            justify-content: center; align-items: center; backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.9); display: none; z-index: 2000;
+            justify-content: center; align-items: center; backdrop-filter: blur(15px);
         }
         .popup-content {
-            background: var(--card); width: 90%; max-width: 400px;
-            padding: 35px; border-radius: 30px; text-align: center;
-            position: relative; border: 1px solid var(--border);
+            background: var(--glass-bg); width: 85%; max-width: 380px;
+            padding: 35px; border-radius: 35px; text-align: center;
+            border: 1px solid var(--glass-border);
         }
-        .popup-content h2 { font-family: var(--font-title); color: var(--accent); margin-top: 0; }
 
-        /* Social Icons Hover logic */
-        .social-box { display: flex; justify-content: center; gap: 15px; margin-top: 25px; }
+        /* Social Icons in Popup */
+        .social-box { display: flex; justify-content: center; gap: 15px; margin: 25px 0; }
         .social-box a {
-            width: 55px; height: 55px; border-radius: 15px;
+            width: 50px; height: 50px; border-radius: 14px;
             background: var(--bg); display: flex; align-items: center;
-            justify-content: center; font-size: 24px; color: var(--sub);
-            text-decoration: none; border: 1px solid var(--border);
+            justify-content: center; font-size: 22px; color: var(--card-sub);
+            text-decoration: none; border: 1px solid var(--glass-border);
         }
-
-        /* لایت مود و دارک مود رنگ‌ها با هاور */
+        /* Hover effects for Light/Dark Mode */
         .social-box a.fb:hover { color: #1877f2; border-color: #1877f2; background: #fff; }
-        .social-box a.tw:hover { color: #000000; border-color: #000000; background: #ffffff; }
+        .social-box a.tw:hover { color: #000000; border-color: #000000; background: #fff; }
         .social-box a.ig:hover { color: #e1306c; border-color: #e1306c; background: #fff; }
 
-        /* Footer Navigation */
+        .close-btn { background: var(--accent); border: none; color: #000; padding: 12px 35px; border-radius: 15px; cursor: pointer; font-family: var(--font-title); font-weight: 800; }
+
+        /* Footer Nav */
         .footer-nav {
-            height: 75px; background: var(--card); border-top: 1px solid var(--border);
+            height: 80px; background: var(--glass-bg); border-top: 1px solid var(--glass-border);
             display: flex; justify-content: space-around; align-items: center;
-            padding-bottom: env(safe-area-inset-bottom); flex-shrink: 0;
+            padding-bottom: env(safe-area-inset-bottom); backdrop-filter: blur(20px);
         }
         .nav-link {
             display: flex; flex-direction: column; align-items: center;
-            font-size: 11px; color: var(--sub); cursor: pointer; text-decoration: none;
+            font-size: 11px; color: var(--card-sub); cursor: pointer; text-decoration: none;
         }
-        .nav-link span { font-family: 'Material Symbols Outlined'; font-size: 28px; color: var(--text); margin-bottom: 3px; }
-        .nav-link:hover { color: var(--accent); }
-
-        .close-btn { margin-top: 25px; background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 8px 25px; border-radius: 10px; cursor: pointer; font-family: var(--font-body); }
+        .nav-link span { font-family: 'Material Symbols Outlined'; font-size: 30px; color: var(--card-text); margin-bottom: 4px; }
     </style>
 </head>
 <body id="body">
 
 <div class="top-actions">
-    <a href="index.html" class="action-btn" title="خانه"><span class="material-symbols-outlined">home</span></a>
-    <button class="action-btn" onclick="toggleTheme()" title="تغییر حالت"><span id="theme-icon" class="material-symbols-outlined">dark_mode</span></button>
+    <a href="index.html" class="action-btn"><span class="material-symbols-outlined">home</span></a>
+    <button class="action-btn" onclick="toggleTheme()"><span id="theme-icon" class="material-symbols-outlined">dark_mode</span></button>
 </div>
 
 <div class="header">
     <h1>اسلام کوییز</h1>
-    <p>معارف اسلامی بر اساس کتاب و سنت</p>
+    <p>بر منهج کتاب و سنت نبوی ﷺ</p>
 </div>
 
 <div class="swiper-container">
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <span class="slide-icon">menu_book</span>
-                <div class="slide-title">قرآن کریم</div>
-                <p class="slide-desc">پرسش‌هایی در مورد کلام‌الله مجید، شأن نزول و تجوید آیات</p>
-            </div>
-            <div class="swiper-slide">
-                <span class="slide-icon">history_edu</span>
-                <div class="slide-title">سیره نبوی</div>
-                <p class="slide-desc">آشنایی با زندگی پیامبر ﷺ و جانفشانی‌های اصحاب کبار رضی‌الله‌عنهم</p>
-            </div>
-            <div class="swiper-slide">
-                <span class="slide-icon">mosque</span>
-                <div class="slide-title">فقه و احکام</div>
-                <p class="slide-desc">احکام صحیح طهارت، نماز، زکات و روزه طبق سنت نبوی</p>
-            </div>
-            <div class="swiper-slide">
-                <span class="slide-icon">auto_awesome</span>
-                <div class="slide-title">عقیده و اخلاق</div>
-                <p class="slide-desc">اصول ایمان و مبانی توحید بر منهج سلف صالح</p>
-            </div>
-        </div>
-    </div>
-</div>
+            
+            <a href="game_quran.html" class="swiper-slide">
+                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/holy-quran-with-rosary-beads-dark_23-2148815141.jpg?w=600');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="slide-icon">menu_book</span>
+                    <div class="slide-title">قرآن کریم</div>
+                    <p class="slide-desc">مفاهیم، تجوید و شگفتی‌های آیات الهی</p>
+                    <div class="play-btn">شروع چالش <span class="material-symbols-outlined">play_circle</span></div>
+                </div>
+            </a>
+            
+            <a href="game_seerah.html" class="swiper-slide">
+                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/beautiful-view-mosque-with-sunlight_23-2148815132.jpg?w=600');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="slide-icon">history_edu</span>
+                    <div class="slide-title">سیره نبوی</div>
+                    <p class="slide-desc">زندگی پیامبر ﷺ و جانفشانی‌های اصحاب رضی‌الله‌عنهم</p>
+                    <div class="play-btn">شروع چالش <span class="material-symbols-outlined">play_circle</span></div>
+                </div>
+            </a>
+            
+            <a href="game_fiqh.html" class="swiper-slide">
+                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/islamic-concept-with-rosary-beads_23-2148815147.jpg?w=600');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="slide-icon">mosque</span>
+                    <div class="slide-title">فقه و احکام</div>
+                    <p class="slide-desc">آموزش صحیح نماز، زکات و طهارت طبق سنت</p>
+                    <div class="play-btn">شروع چالش <span class="material-symbols-outlined">play_circle</span></div>
+                </div>
+            </a>
+            
+            <a href="game_aqidah.html" class="swiper-slide">
+                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/beautiful-landscape-with-mountains-sunset_23-2148272531.jpg?w=600');"></div>
+                <div class="slide-overlay"></div>
+                <div class="slide-content">
+                    <span class="slide-icon">auto_awesome</span>
+                    <div class="slide-title">عقیده و اخلاق</div>
+                    <p class="slide-desc">منهج سلف صالح و اصول ایمان و توحید</p>
+                    <div class="play-btn">شروع چالش <span class="material-symbols-outlined">play_circle</span></div>
+                </div>
+            </a>
 
-<div class="popup-overlay" id="popupSocial">
-    <div class="popup-content">
-        <h2>ارتباط با ما</h2>
-        <p style="font-size: 14px; color: var(--sub);">ما را در شبکه‌های اجتماعی دنبال کنید</p>
-        <div class="social-box">
-            <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
-            <a href="#" class="tw"><i class="fab fa-x-twitter"></i></a>
-            <a href="#" class="ig"><i class="fab fa-instagram"></i></a>
         </div>
-        <button class="close-btn" onclick="togglePopup('popupSocial', false)">بستن</button>
     </div>
 </div>
 
 <div class="popup-overlay" id="popupAbout">
     <div class="popup-content">
-        <h2>درباره ما</h2>
-        <p style="font-size: 14px; line-height: 1.8; text-align: justify; color: var(--sub);">
+        <h2 style="font-family: var(--font-title); color: var(--accent);">درباره ما</h2>
+        <p style="font-size: 14px; line-height: 1.8; text-align: justify; color: var(--card-sub);">
             این برنامه با هدف نشر معارف صحیح اسلامی بر اساس کتاب الله و سنت پیامبر ﷺ طراحی شده است. تمامی محتوا از منابع معتبر اهل سنت و جماعت استخراج شده تا بستری سالم برای یادگیری خانواده‌ها فراهم گردد.
         </p>
-        <button class="close-btn" onclick="togglePopup('popupAbout', false)">متوجه شدم</button>
+        
+        <div class="social-box">
+            <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="tw"><i class="fab fa-x-twitter"></i></a>
+            <a href="#" class="ig"><i class="fab fa-instagram"></i></a>
+        </div>
+
+        <button class="close-btn" onclick="togglePopup('popupAbout', false)">بستن</button>
     </div>
 </div>
 
 <div class="footer-nav">
     <div class="nav-link" onclick="togglePopup('popupAbout', true)"><span>info</span>درباره ما</div>
     <div class="nav-link"><span>emoji_events</span>برترین‌ها</div>
-    <div class="nav-link" onclick="togglePopup('popupSocial', true)"><span>share</span>حمایت از ما</div>
+    <div class="nav-link" onclick="togglePopup('popupAbout', true)"><span>share</span>اشتراک</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -208,12 +256,6 @@
     }
 
     function togglePopup(id, show) { document.getElementById(id).style.display = show ? "flex" : "none"; }
-
-    window.onclick = function(e) {
-        if (e.target.className === "popup-overlay") {
-            document.querySelectorAll('.popup-overlay').forEach(p => p.style.display = "none");
-        }
-    }
 </script>
 
 </body>
