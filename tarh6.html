@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>اسلام کوییز | نسخه ۹ موضوعی با اصلاحات UI</title>
+    <title>اسلام کوییز | نسخه نهایی UI Studio</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;800&family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -33,8 +33,7 @@
             --glass-border: rgba(0, 0, 0, 0.1);
         }
 
-        /* انیمیشن کلی برای تغییرات نرم */
-        * { box-sizing: border-box; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); -webkit-tap-highlight-color: transparent; }
 
         html, body {
             margin: 0; padding: 0; width: 100%; height: 100%;
@@ -53,44 +52,36 @@
             width: 48px; height: 48px; border-radius: 16px;
             background: var(--glass-bg); border: 1px solid var(--glass-border);
             color: var(--accent); cursor: pointer; display: flex;
-            align-items: center; justify-content: center;
-            text-decoration: none; backdrop-filter: blur(12px);
+            align-items: center; justify-content: center; backdrop-filter: blur(12px);
         }
 
-        .header { padding: 50px 20px 0; text-align: center; flex-shrink: 0; }
+        .header { padding: 50px 20px 0; text-align: center; flex-shrink: 0; z-index: 10; }
         .header h1 { font-family: var(--font-title); font-size: 28px; margin: 0; }
         .header p { font-size: 13px; color: var(--card-sub); margin-top: 6px; }
 
         .swiper-container {
-            flex: 1; display: flex; align-items: center; justify-content: center;
-            width: 100%; overflow: hidden; perspective: 1200px;
+            flex: 1; width: 100%; display: flex; align-items: center; justify-content: center;
         }
 
-        .swiper { width: 300px; height: 430px; }
+        .swiper { width: 310px; height: 440px; overflow: visible; }
 
         .swiper-slide {
             border-radius: 35px; position: relative; overflow: hidden;
-            border: 1px solid var(--glass-border);
-            background: #1e293b;
+            border: 1px solid var(--glass-border); background: #1e293b;
         }
 
         .slide-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover; background-position: center;
-            z-index: 1;
+            background-size: cover; background-position: center; z-index: 1;
         }
         
         .slide-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            z-index: 2;
+            background: var(--glass-bg); backdrop-filter: blur(15px); z-index: 2;
         }
 
         .slide-content {
-            position: relative; z-index: 3;
-            width: 100%; height: 100%;
+            position: relative; z-index: 3; width: 100%; height: 100%;
             display: flex; flex-direction: column; align-items: center;
             justify-content: center; padding: 35px 20px; text-align: center;
         }
@@ -105,14 +96,12 @@
 
         .play-btn {
             background: var(--accent); color: var(--btn-text);
-            padding: 10px 25px; border-radius: 15px;
-            font-family: var(--font-title); font-size: 13px;
-            display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            padding: 12px 28px; border-radius: 16px; font-family: var(--font-title);
+            font-size: 14px; display: flex; align-items: center; gap: 8px;
             font-weight: 800; text-decoration: none;
         }
 
-        /* Popups */
+        /* --- استایل پاپ‌آپ --- */
         .popup-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); display: none; z-index: 2000;
@@ -124,45 +113,34 @@
             border: 1px solid var(--glass-border);
         }
 
-        /* --- اصلاح شده: استایل آیکون های شبکه های اجتماعی با انیمیشن --- */
         .social-box { display: flex; justify-content: center; gap: 15px; margin: 25px 0; }
         .social-box a {
             width: 50px; height: 50px; border-radius: 14px;
             background: var(--bg); display: flex; align-items: center;
             justify-content: center; font-size: 22px; color: var(--card-sub);
             text-decoration: none; border: 1px solid var(--glass-border);
-            /* انیمیشن برای هاور */
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        /* افکت هاور در لایت مود و دارک مود */
-        .social-box a:hover {
-            transform: translateY(-8px); /* حرکت به بالا */
-            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
-        }
-
-        /* رنگ های اصلی برند در هاور */
+        .social-box a:hover { transform: translateY(-8px); }
         .social-box a.fb:hover { color: #1877f2; border-color: #1877f2; background: #fff; }
-        .social-box a.tw:hover { color: #000000; border-color: #000000; background: #fff; }
+        .social-box a.tw:hover { color: #000; border-color: #000; background: #fff; }
         .social-box a.ig:hover { color: #e1306c; border-color: #e1306c; background: #fff; }
 
         .close-btn { 
-            background: var(--accent); border: none; 
-            color: var(--btn-text); padding: 12px 40px; 
-            border-radius: 15px; cursor: pointer; 
+            background: var(--accent); border: none; color: var(--btn-text);
+            padding: 12px 40px; border-radius: 15px; cursor: pointer;
             font-family: var(--font-title); font-weight: 800; 
         }
 
         .footer-nav {
-            height: 80px; background: var(--glass-bg); border-top: 1px solid var(--glass-border);
+            height: 85px; background: var(--glass-bg); border-top: 1px solid var(--glass-border);
             display: flex; justify-content: space-around; align-items: center;
-            padding-bottom: env(safe-area-inset-bottom); backdrop-filter: blur(25px);
+            padding-bottom: env(safe-area-inset-bottom); backdrop-filter: blur(25px); z-index: 10;
         }
         .nav-link {
             display: flex; flex-direction: column; align-items: center;
-            font-size: 11px; color: var(--card-sub); cursor: pointer; text-decoration: none;
+            font-size: 11px; color: var(--card-sub); cursor: pointer;
         }
-        .nav-link span { font-family: 'Material Symbols Outlined'; font-size: 30px; color: var(--card-text); margin-bottom: 4px; }
+        .nav-link span { font-family: 'Material Symbols Outlined'; font-size: 32px; color: var(--card-text); }
     </style>
 </head>
 <body id="body">
@@ -174,112 +152,25 @@
 
 <div class="header">
     <h1>اسلام کوییز</h1>
-    <p>۹ مرحله چالش‌برانگیز بر منهج نبوی ﷺ</p>
+    <p>۹ مرحله چالش‌برانگیز | UI Studio</p>
 </div>
 
 <div class="swiper-container">
     <div class="swiper mySwiper">
         <div class="swiper-wrapper">
-            
             <div class="swiper-slide">
                 <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/holy-quran-with-rosary-beads-dark_23-2148815141.jpg?w=600');"></div>
                 <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <span class="slide-icon">menu_book</span>
-                    <div class="slide-title">قرآن کریم</div>
-                    <p class="slide-desc">مفاهیم و تجوید آیات الهی</p>
-                    <a href="quran.html" class="play-btn">شروع مرحله ۱</a>
-                </div>
+                <div class="slide-content"><span class="slide-icon">menu_book</span><div class="slide-title">قرآن کریم</div><p class="slide-desc">مفاهیم آیات الهی</p><a href="quran.html" class="play-btn">مرحله ۱</a></div>
             </div>
-
-            <div class="swiper-slide">
-                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/islamic-concept-with-rosary-beads_23-2148815147.jpg?w=600');"></div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <span class="slide-icon">auto_stories</span>
-                    <div class="slide-title">احادیث نبوی</div>
-                    <p class="slide-desc">گوهرهایی از کلام پیامبر ﷺ</p>
-                    <a href="hadith.html" class="play-btn">شروع مرحله ۲</a>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/beautiful-view-mosque-with-sunlight_23-2148815132.jpg?w=600');"></div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <span class="slide-icon">history_edu</span>
-                    <div class="slide-title">سیره نبوی</div>
-                    <p class="slide-desc">زندگی پر برکت رسول الله ﷺ</p>
-                    <a href="seerah.html" class="play-btn">شروع مرحله ۳</a>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/beautiful-landscape-with-mountains-sunset_23-2148272531.jpg?w=600');"></div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <span class="slide-icon">verified_user</span>
-                    <div class="slide-title">عقیده و توحید</div>
-                    <p class="slide-desc">اصول ایمان و منهج سلف صالح</p>
-                    <a href="aqidah.html" class="play-btn">شروع مرحله ۴</a>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/islamic-concept-with-rosary-beads_23-2148815147.jpg?w=600');"></div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <span class="slide-icon">mosque</span>
-                    <div class="slide-title">فقه و احکام</div>
-                    <p class="slide-desc">احکام نماز، روزه و طهارت</p>
-                    <a href="fiqh.html" class="play-btn">شروع مرحله ۵</a>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/old-paper-texture_23-2148317050.jpg?w=600');"></div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <span class="slide-icon">import_contacts</span>
-                    <div class="slide-title">قصص الانبیاء</div>
-                    <p class="slide-desc">عبرت‌هایی از زندگی پیامبران الهی</p>
-                    <a href="prophets.html" class="play-btn">شروع مرحله ۶</a>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/nature-landscape-with-flowers_23-2148815135.jpg?w=600');"></div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <span class="slide-icon">favorite</span>
-                    <div class="slide-title">اخلاق و ادب</div>
-                    <p class="slide-desc">تهذیب نفس و مکارم اخلاق</p>
-                    <a href="ethics.html" class="play-btn">شروع مرحله ۷</a>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/arabic-style-door-mosque_23-2148815139.jpg?w=600');"></div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <span class="slide-icon">castle</span>
-                    <div class="slide-title">تاریخ اسلام</div>
-                    <p class="slide-desc">فتوحات و تمدن درخشان اسلامی</p>
-                    <a href="history.html" class="play-btn">شروع مرحله ۸</a>
-                </div>
-            </div>
-
-            <div class="swiper-slide">
-                <div class="slide-bg" style="background-image: url('https://img.freepik.com/free-photo/group-people-walking-desert_23-2148815144.jpg?w=600');"></div>
-                <div class="slide-overlay"></div>
-                <div class="slide-content">
-                    <span class="slide-icon">groups</span>
-                    <div class="slide-title">یاران پیامبر ﷺ</div>
-                    <p class="slide-desc">زندگینامه صحابه و تابعین گرانقدر</p>
-                    <a href="sahaba.html" class="play-btn">شروع مرحله ۹</a>
-                </div>
-            </div>
-
+            <div class="swiper-slide"><div class="slide-overlay"></div><div class="slide-content"><span class="slide-icon">history_edu</span><div class="slide-title">سیره نبوی</div><p class="slide-desc">زندگی پیامبر ﷺ</p><a href="seerah.html" class="play-btn">مرحله ۲</a></div></div>
+            <div class="swiper-slide"><div class="slide-overlay"></div><div class="slide-content"><span class="slide-icon">mosque</span><div class="slide-title">فقه</div><p class="slide-desc">احکام شرعی</p><a href="fiqh.html" class="play-btn">مرحله ۳</a></div></div>
+            <div class="swiper-slide"><div class="slide-overlay"></div><div class="slide-content"><span class="slide-icon">verified_user</span><div class="slide-title">عقیده</div><p class="slide-desc">اصول ایمان</p><a href="aqidah.html" class="play-btn">مرحله ۴</a></div></div>
+            <div class="swiper-slide"><div class="slide-overlay"></div><div class="slide-content"><span class="slide-icon">auto_stories</span><div class="slide-title">احادیث</div><p class="slide-desc">کلام نبوی</p><a href="hadith.html" class="play-btn">مرحله ۵</a></div></div>
+            <div class="swiper-slide"><div class="slide-overlay"></div><div class="slide-content"><span class="slide-icon">castle</span><div class="slide-title">تاریخ</div><p class="slide-desc">تمدن اسلام</p><a href="history.html" class="play-btn">مرحله ۶</a></div></div>
+            <div class="swiper-slide"><div class="slide-overlay"></div><div class="slide-content"><span class="slide-icon">favorite</span><div class="slide-title">اخلاق</div><p class="slide-desc">ادب اسلامی</p><a href="ethics.html" class="play-btn">مرحله ۷</a></div></div>
+            <div class="swiper-slide"><div class="slide-overlay"></div><div class="slide-content"><span class="slide-icon">groups</span><div class="slide-title">صحابه</div><p class="slide-desc">یاران رسول الله</p><a href="sahaba.html" class="play-btn">مرحله ۸</a></div></div>
+            <div class="swiper-slide"><div class="slide-overlay"></div><div class="slide-content"><span class="slide-icon">import_contacts</span><div class="slide-title">انبیاء</div><p class="slide-desc">قصص پیامبران</p><a href="prophets.html" class="play-btn">مرحله ۹</a></div></div>
         </div>
     </div>
 </div>
@@ -287,16 +178,14 @@
 <div class="popup-overlay" id="popupAbout">
     <div class="popup-content">
         <h2 style="font-family: var(--font-title); color: var(--accent);">درباره ما</h2>
-        <p style="font-size: 14px; line-height: 1.8; text-align: justify; color: var(--card-sub);">
-            نشر معارف صحیح اسلامی بر اساس کتاب الله و سنت پیامبر ﷺ در بستری مدرن توسط UI Studio.
+        <p style="font-size: 14px; line-height: 1.8; color: var(--card-sub);">
+            نشر معارف صحیح اسلامی بر اساس کتاب الله و سنت نبوی ﷺ توسط تیم UI Studio.
         </p>
-        
         <div class="social-box">
             <a href="#" class="fb"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="tw"><i class="fab fa-x-twitter"></i></a>
             <a href="#" class="ig"><i class="fab fa-instagram"></i></a>
         </div>
-
         <button class="close-btn" onclick="togglePopup('popupAbout', false)">بستن</button>
     </div>
 </div>
@@ -314,6 +203,9 @@
         grabCursor: true,
         loop: true,
         speed: 1000,
+        // --- اصلاح چرخش در موبایل ---
+        touchEventsTarget: 'container', 
+        threshold: 1, 
         cubeEffect: {
             shadow: true,
             slideShadows: true,
@@ -324,11 +216,14 @@
 
     function toggleTheme() {
         document.body.classList.toggle("light");
-        const icon = document.getElementById("theme-icon");
-        icon.textContent = document.body.classList.contains("light") ? "light_mode" : "dark_mode";
+        document.getElementById("theme-icon").textContent = 
+            document.body.classList.contains("light") ? "light_mode" : "dark_mode";
     }
 
-    function togglePopup(id, show) { document.getElementById(id).style.display = show ? "flex" : "none"; }
+    // تابع باز و بسته کردن پاپ‌آپ
+    function togglePopup(id, show) {
+        document.getElementById(id).style.display = show ? "flex" : "none";
+    }
 </script>
 
 </body>
